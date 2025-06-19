@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:7226/api/Auth';
+  private apiUrl = 'expensesappapi-gbgze6exfwe6gcad.germanywestcentral-01.azurewebsites.net/api/Auth';
   private currentUserSubject = new BehaviorSubject<string | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
