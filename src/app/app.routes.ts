@@ -32,7 +32,7 @@ export const routes: Routes = [
     },
     {
         path: "user-profile",
-        component: UserProfile, // or use loadComponent for lazy load
+        component: UserProfile,
         canActivate: [AuthGuard]
     },
     {
