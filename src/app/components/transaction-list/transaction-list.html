@@ -1,10 +1,12 @@
 <div class="container-fluid px-4">
+
+    <!-- Summary Cards -->
     <div class="row g-4 mb-4">
         <div class="col-md-4">
             <div class="card h-100 bg-success bg-opacity-75 text-white">
                 <div class="card-body">
                     <h5 class="card-title">Total Income</h5>
-                    <h5 class="card-text">{{getTotalIncome() | currency}}</h5>
+                    <h5 class="card-text">{{ getTotalIncome() | currency }}</h5>
                 </div>
             </div>
         </div>
@@ -13,21 +15,30 @@
             <div class="card h-100 bg-danger bg-opacity-75 text-white">
                 <div class="card-body">
                     <h5 class="card-title">Total Expenses</h5>
-                    <h5 class="card-text">{{getTotalExpenses() | currency}}</h5>
+                    <h5 class="card-text">{{ getTotalExpenses() | currency }}</h5>
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-4">
-            <div class="card h-100 bg-opacity-75 text-white" [ngClass]="getNetBalance() >= 0? 'bg-success': 'bg-danger'">
+            <div class="card h-100 bg-opacity-75 text-white" [ngClass]="getNetBalance() >= 0 ? 'bg-success' : 'bg-danger'">
                 <div class="card-body">
                     <h5 class="card-title">Net Balance</h5>
-                    <h5 class="card-text fw-bold">{{getNetBalance() | currency}}</h5>
+                    <h5 class="card-text fw-bold">{{ getNetBalance() | currency }}</h5>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Filter Input -->
+    <div class="mb-3">
+        <input type="text"
+               class="form-control"
+               placeholder="Search by type, category, or amount"
+               [(ngModel)]="filterTerm" />
+    </div>
+
+    <!-- Transaction Table -->
     <h3>Transactions</h3>
     <div class="table-responsive">
         <table class="table table-hover align-middle">
@@ -41,22 +52,22 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let transaction of transactions">
-                    <td>{{transaction.createdAt | date}}</td>
+                <tr *ngFor="let transaction of filteredTransactions">
+                    <td>{{ transaction.createdAt | date }}</td>
                     <td [ngClass]="{
-                        'text-success': transaction.type=='Income',
-                        'text-danger': transaction.type=='Expense'
-                    }">{{transaction.type}}</td>
-                    <td>{{transaction.category}}</td>
+                        'text-success': transaction.type === 'Income',
+                        'text-danger': transaction.type === 'Expense'
+                    }">{{ transaction.type }}</td>
+                    <td>{{ transaction.category }}</td>
                     <td [ngClass]="{
-                        'text-success': transaction.type=='Income',
-                        'text-danger': transaction.type=='Expense'
-                    }">{{transaction.amount | currency}}</td>
+                        'text-success': transaction.type === 'Income',
+                        'text-danger': transaction.type === 'Expense'
+                    }">{{ transaction.amount | currency }}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary me-1"(click)="editTransaction(transaction)">
+                        <button class="btn btn-sm btn-outline-primary me-1" (click)="editTransaction(transaction)">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger me-1"(click)="deleteTransaction(transaction)">
+                        <button class="btn btn-sm btn-outline-danger me-1" (click)="deleteTransaction(transaction)">
                             <i class="bi bi-trash"></i>
                         </button>
                     </td>
