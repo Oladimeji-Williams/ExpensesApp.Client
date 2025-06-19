@@ -5,7 +5,7 @@ import { Signup } from './components/signup/signup';
 import { TransactionList } from './components/transaction-list/transaction-list';
 import { TransactionForm } from './components/transaction-form/transaction-form';
 import { AuthGuard } from './guards/auth.guard';
-
+import { UserProfile } from './components/user-profile/user-profile';
 export const routes: Routes = [
     {
         path: "login",
@@ -30,15 +30,13 @@ export const routes: Routes = [
         component: TransactionForm,
         canActivate: [AuthGuard]
     },
-    // {
-    //     path: "",
-    //     redirectTo: "/transactions",
-    //     pathMatch: "full",
-    //     canActivate: [AuthGuard]
-    // },
+    {
+        path: "user-profile",
+        component: UserProfile, // or use loadComponent for lazy load
+        canActivate: [AuthGuard]
+    },
     {
         path: "**",
         redirectTo: "/transactions"
     }
-    
 ];
