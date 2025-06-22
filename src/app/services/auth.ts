@@ -5,6 +5,7 @@ import { AuthResponse } from '../models/auth-response';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { ChangePasswordResponse } from '../models/change-password-response';
 
 @Injectable({
     providedIn: 'root'
@@ -39,6 +40,14 @@ export class AuthService {
         );
     }
 
+    changePassword(data: { currentPassword: string; newPassword: string }): Observable<ChangePasswordResponse> {
+        const token = localStorage.getItem('token');
+
+        return this.http.post<ChangePasswordResponse>(`${this.apiUrl}/ChangePassword`, data, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+    }
+
     logout(): void {
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
@@ -52,4 +61,5 @@ export class AuthService {
     getToken(): string | null {
         return localStorage.getItem('token');
     }
+
 }
