@@ -1,37 +1,46 @@
-<div class="container">
+<div class="container-fluid px-3 px-md-0">
     <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-            <div class="card mt-5">
+        <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+            <div class="card mt-5 shadow">
                 <div class="card-header bg-primary bg-opacity-75">
-                    <h3 class="card-title mb-0 text-white">Login</h3>
+                    <h3 class="card-title mb-0 text-white text-center">Login</h3>
                 </div>
                 <div class="card-body">
                     
                     <div class="alert alert-danger" *ngIf="errorMessage">
-                        {{errorMessage}}
+                        {{ errorMessage }}
                     </div>
                     
                     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" [ngClass]="{'is-invalid': hasError('email', 'required') || hasError('email', 'email')}" id="email" formControlName="email">
-
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                formControlName="email"
+                                [ngClass]="{'is-invalid': hasError('email', 'required') || hasError('email', 'email')}">
                             <div class="invalid-feedback" *ngIf="hasError('email', 'required')">Email is required</div>
                             <div class="invalid-feedback" *ngIf="hasError('email', 'email')">Please, enter a valid email address</div>
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" [ngClass]="{'is-invalid': hasError('password', 'required')}" id="password" formControlName="password">
-
+                            <input
+                                type="password"
+                                class="form-control"
+                                id="password"
+                                formControlName="password"
+                                [ngClass]="{'is-invalid': hasError('password', 'required')}">
                             <div class="invalid-feedback" *ngIf="hasError('password', 'required')">Password is required</div>
                         </div>
 
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
                         </div>
+
                         <div class="text-center mt-3">
-                            Do not have an account yet? <a [routerLink]="'/signup'">Sign Up</a>
+                            Don’t have an account? <a [routerLink]="'/signup'">Sign up</a>
                         </div>
                     </form>
                 </div>

@@ -1,46 +1,38 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-4">
-            <h3 class="mb-4 text-center">User Profile</h3>
+            <div class="text-center">
+                <h3 class="mb-4">User Profile</h3>
 
-            <div *ngIf="loading" class="text-center my-3">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                <!-- Loading Spinner -->
+                <div *ngIf="loading" class="my-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <!-- Change Password Button -->
+                <div class="mb-3">
+                    <a class="btn btn-sm btn-outline-primary" [routerLink]="'/change-password'">
+                        <i class="bi bi-lock me-1"></i>
+                        Change Password
+                    </a>
+                </div>
+
+                <!-- Alerts -->
+                <div *ngIf="errorMessage" class="alert alert-danger">
+                    {{ errorMessage }}
+                </div>
+                <div *ngIf="successMessage" class="alert alert-success">
+                    {{ successMessage }}
                 </div>
             </div>
 
-            <div *ngIf="message" class="alert alert-info text-center">
-                {{ message }}
-            </div>
-
-            <!-- Profile Image Upload and Preview -->
-
-            <div class="text-center mb-4">
-                <img 
-                    [src]="profileImageUrl" 
-                    (error)="profileImageUrl = 'assets/default-profile.png'" 
-                    class="rounded-circle object-fit-cover" 
-                    width="120" 
-                    height="120" 
-                    alt="Profile Picture" 
-                />
-                <div class="mt-2">
-                    <label class="btn btn-sm btn-outline-secondary mb-0">
-                        Change
-                        <input type="file" accept="image/*" (change)="onProfileImageSelected($event)" hidden>
-                    </label>
-                </div>
-            </div>
-
+            <!-- Profile Form -->
             <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" *ngIf="!loading">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input
-                        id="email"
-                        type="email"
-                        class="form-control"
-                        formControlName="email"
-                    />
+                    <input id="email" type="email" class="form-control" formControlName="email" />
                 </div>
 
                 <div class="mb-3">
@@ -50,6 +42,7 @@
                         type="text"
                         class="form-control"
                         formControlName="firstName"
+                        [ngClass]="{ 'is-invalid': profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched }"
                     />
                 </div>
 
@@ -60,6 +53,7 @@
                         type="text"
                         class="form-control"
                         formControlName="lastName"
+                        [ngClass]="{ 'is-invalid': profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched }"
                     />
                 </div>
 
@@ -70,20 +64,16 @@
                         type="tel"
                         class="form-control"
                         formControlName="phoneNumber"
+                        [ngClass]="{ 'is-invalid': profileForm.get('phoneNumber')?.invalid && profileForm.get('phoneNumber')?.touched }"
                     />
                 </div>
 
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <textarea
-                        id="address"
-                        rows="3"
-                        class="form-control"
-                        formControlName="address"
-                    ></textarea>
+                    <textarea id="address" rows="3" class="form-control" formControlName="address"></textarea>
                 </div>
 
-                <button class="btn btn-primary w-100 py-3" type="submit" [disabled]="loading">
+                <button class="btn btn-primary w-100 py-3" type="submit" [disabled]="loading || !profileForm.valid">
                     {{ loading ? 'Saving...' : 'Update Profile' }}
                 </button>
             </form>
