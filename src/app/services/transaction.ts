@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Transaction } from '../models/transaction';
 import { environment } from '../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -12,8 +13,11 @@ export class TransactionService {
 
     constructor(private http: HttpClient) {}
 
+
     GetTransactions(): Observable<Transaction[]> {
-        return this.http.get<Transaction[]>(this.apiUrl);
+      return this.http.get<{ items: Transaction[] }>(this.apiUrl).pipe(
+        map(response => response.items)
+      );
     }
 
     GetTransaction(id: number): Observable<Transaction> {
