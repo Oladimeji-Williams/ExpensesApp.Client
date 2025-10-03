@@ -43,9 +43,7 @@ export class AuthService {
     changePassword(data: { currentPassword: string; newPassword: string }): Observable<ChangePasswordResponse> {
         const token = localStorage.getItem('token');
 
-        return this.http.post<ChangePasswordResponse>(`${this.apiUrl}/ChangePassword`, data, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+        return this.http.post<ChangePasswordResponse>(`${this.apiUrl}/ChangePassword`, data);
     }
 
     logout(): void {
