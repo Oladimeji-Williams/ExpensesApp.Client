@@ -15,5 +15,12 @@ export const AuthInterceptor: HttpInterceptorFn = (request, next) => {
             }
         )
     }
-    return next(request);
+    return next(request).pipe(
+        catchError(error => {
+            if(error.status === 401){
+                authService.logout();
+            }
+            return throwError(() => error);
+        })
+    );
 }
