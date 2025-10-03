@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class TransactionService {
-    private apiUrl = `${environment.apiBaseUrl}/Transaction`;
+    private apiUrl = `${environment.apiBaseUrl}/Transactions`;
 
     constructor(private http: HttpClient) {}
 
